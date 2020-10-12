@@ -10,3 +10,4 @@ Solutions are developed in pair programming mode.
 * Day 2: Solved 2020-09-28
 * Day 3: Solved 2020-10-05
 * Day 4: Solved 2020-10-05
+* Day 5: Solved 2020-10-12 (Only Part one)
