@@ -52,15 +52,45 @@ def check_string(input_str):
 
 # Part Two functions
 
+def indices(lst, element):
+    result = []
+    offset = -1
+    while True:
+        try:
+            offset = lst.index(element, offset+1)
+        except ValueError:
+            return result
+        result.append(offset)
+
 def check_for_pairs(input_str):
-    pairs = []
+    valid_pair_counter = 0
     n = 2
     liste = [input_str[i:i+n] for i in range(0, len(input_str)-1, n-1)]
-    for pair in liste:
-        if liste.count(pair) > 1:
-            pairs.append(pair)
+    for i in range(0, len(liste)-1):
+        #match_indices = [j for j, e in enumerate(liste) if e == liste[i]]
+        match_indices = indices(liste, liste[i])
+        
+        if liste.count(liste[i]) > 2:
+            print(match_indices)
+            valid_pair_counter += 1
+        elif liste.count(liste[i]) == 2 and match_indices[1] - match_indices[0] > 1:
+            print(match_indices)
+            valid_pair_counter += 1
+        else:
+            continue
+    
+    if valid_pair_counter >= 1:
+        print(liste)
+        return True
+    else: 
+        return False
 
-    return pairs
+
+    # for pair in liste:
+    #     if liste.count(pair) > 1:
+    #         pairs.append(pair)
+
+    # return pairs
 
 def check_for_overlap(input_str):
     pair = check_for_pairs(input_str)
@@ -84,12 +114,17 @@ def check_for_palindrom(input_str):
 
     return False
 
+# def check_string_2(input_str):
+#     if len(check_for_pairs(input_str)) > 1 and check_for_overlap(input_str) and check_for_palindrom(input_str):
+#         return 'nice'
+#     else:
+#         return 'naughty'
+
 def check_string_2(input_str):
-    if len(check_for_pairs(input_str)) > 1 and check_for_overlap(input_str) and check_for_palindrom(input_str):
+    if check_for_pairs(input_str) and check_for_palindrom(input_str):
         return 'nice'
     else:
         return 'naughty'
-
 
 # Test Cases Part One
 assert check_string('ugknbfddgicrmopn') == 'nice'
@@ -118,28 +153,33 @@ if __name__ == '__main__':
         if check_string(line) == 'nice':
             counter_mp +=1
 
+    print(f'MP Count: {counter_mp}')
+
+
+    with open('./day05_input_mp_2.txt', 'r') as fh:
+        lines_mp = fh.readlines()
+
     for line in lines_mp:
         if check_string_2(line) == 'nice':
             counter_mp_2 +=1
 
-    print(f'MP Count: {counter_mp}')
     print(f'MP Count 2: {counter_mp_2}')
 
-    counter_mb = 0
-    counter_mb_2 = 0
+    # counter_mb = 0
+    # counter_mb_2 = 0
 
-    with open('./day05_input_mb.txt', 'r') as fh:
-        lines_mb = fh.readlines()
+    # with open('./day05_input_mb.txt', 'r') as fh:
+    #     lines_mb = fh.readlines()
 
-    for line in lines_mb:
-        if check_string(line) == 'nice':
-            counter_mb +=1
+    # for line in lines_mb:
+    #     if check_string(line) == 'nice':
+    #         counter_mb +=1
 
-    for line in lines_mb:
-        if check_string_2(line) == 'nice':
-            counter_mb_2 +=1
+    # for line in lines_mb:
+    #     if check_string_2(line) == 'nice':
+    #         counter_mb_2 +=1
 
-    print(f'MB Count: {counter_mb}')
-    print(f'MB Count 2: {counter_mb_2}')
+    # print(f'MB Count: {counter_mb}')
+    # print(f'MB Count 2: {counter_mb_2}')
 
 
