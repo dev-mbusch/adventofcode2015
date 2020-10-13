@@ -69,20 +69,20 @@ def check_for_pairs(input_str):
     for i in range(0, len(liste)-1):
         #match_indices = [j for j, e in enumerate(liste) if e == liste[i]]
         match_indices = indices(liste, liste[i])
-        
+
         if liste.count(liste[i]) > 2:
-            print(match_indices)
+            # print(match_indices)
             valid_pair_counter += 1
         elif liste.count(liste[i]) == 2 and match_indices[1] - match_indices[0] > 1:
-            print(match_indices)
+            # print(match_indices)
             valid_pair_counter += 1
         else:
             continue
-    
+
     if valid_pair_counter >= 1:
-        print(liste)
+        # print(liste)
         return True
-    else: 
+    else:
         return False
 
 
@@ -156,7 +156,7 @@ if __name__ == '__main__':
     print(f'MP Count: {counter_mp}')
 
 
-    with open('./day05_input_mp_2.txt', 'r') as fh:
+    with open('./day05_input_mp.txt', 'r') as fh:
         lines_mp = fh.readlines()
 
     for line in lines_mp:
@@ -165,21 +165,21 @@ if __name__ == '__main__':
 
     print(f'MP Count 2: {counter_mp_2}')
 
-    # counter_mb = 0
-    # counter_mb_2 = 0
+    counter_mb = 0
+    counter_mb_2 = 0
 
-    # with open('./day05_input_mb.txt', 'r') as fh:
-    #     lines_mb = fh.readlines()
+    with open('./day05_input_mb.txt', 'r') as fh:
+        lines_mb = fh.readlines()
 
-    # for line in lines_mb:
-    #     if check_string(line) == 'nice':
-    #         counter_mb +=1
+    for line in lines_mb:
+        if check_string(line) == 'nice':
+            counter_mb +=1
 
-    # for line in lines_mb:
-    #     if check_string_2(line) == 'nice':
-    #         counter_mb_2 +=1
+    for line in lines_mb:
+        if check_string_2(line) == 'nice':
+            counter_mb_2 +=1
 
-    # print(f'MB Count: {counter_mb}')
-    # print(f'MB Count 2: {counter_mb_2}')
+    print(f'MB Count: {counter_mb}')
+    print(f'MB Count 2: {counter_mb_2}')
 
 
