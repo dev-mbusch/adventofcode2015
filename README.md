@@ -12,3 +12,4 @@ Solutions are developed in pair programming mode.
 * Day 4: Solved 2020-10-05
 * Day 5: Solved 2020-10-12 (Only Part One)
 * Day 5: Solved 2020-10-13 (Only Part Two)
+* Day 6: WIP    2020-10-19 (Only Part One)
