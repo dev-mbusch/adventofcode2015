@@ -9,7 +9,7 @@ import re
 from pprint import pprint as pp
 
 # Grid Initilization
-gridsize = 10
+gridsize = 1000
 init_grid = [[0 for _i in range(gridsize)] for _j in range(gridsize)]
 
 
@@ -37,18 +37,15 @@ def set_switch_plan(start_grid, start_point, end_point, action):
     end_grid = start_grid
     x1, y1 = start_point
     x2, y2 = end_point
-    offset_x = x1
-    offset_y = y1
 
-    for i, row in enumerate(end_grid[x1:x2+1]):
-
-        for j, column in enumerate(row[y1:y2+1]):
+    for row in range(x1, x2 + 1):
+        for col in range(y1, y2 + 1):
             if action == 'toggle':
-                end_grid[j + offset_x][i + offset_y] = int(not end_grid[i][j])
+                end_grid[row][col] = (end_grid[row][col] + 1) % 2
             elif action == 'turn_on':
-                end_grid[j + offset_x][i + offset_y] = 1
+                end_grid[row][col] = 1
             elif action == 'turn_off':
-                end_grid[j + offset_x][i + offset_y] = 0
+                end_grid[row][col] = 0
             else:
                 raise ValueError(f'The provided action ´{action}´ is not a valid operation.')
 
@@ -62,59 +59,75 @@ def compute_lights_on(grid):
 
     return counter_lights_on
 
-# Tests Part One 10x10 Grid
-test_grid = []
+def set_brightness(start_grid, start_point, end_point, action):
+    end_grid = start_grid
+    x1, y1 = start_point
+    x2, y2 = end_point
 
-print('\n', '#' * 40, '\n')
-pp(init_grid)
-print('\n', '#' * 40, '\n')
+    for row in range(x1, x2 + 1):
+        for col in range(y1, y2 + 1):
+            if action == 'toggle':
+                end_grid[row][col] += 2
+            elif action == 'turn_on':
+                end_grid[row][col] += 1
+            elif action == 'turn_off':
+                end_grid[row][col] -= 1
+            else:
+                raise ValueError(f'The provided action ´{action}´ is not a valid operation.')
+            if end_grid[row][col] < 0:
+                end_grid[row][col] = 0
 
-assert compute_lights_on(set_switch_plan(init_grid, (0,0), (9,9), 'turn_on')) == 100 # Works fine
-test_grid = set_switch_plan(init_grid, (0,0), (9,9), 'turn_on')
+    return end_grid
 
-print('\n', '#' * 40, '\n')
-pp(test_grid)
-print('\n', '#' * 40, '\n')
-print(compute_lights_on(test_grid))
+def compute_brightness_value(grid):
 
-assert compute_lights_on(set_switch_plan(test_grid, (0,0), (9,0), 'toggle')) == 90 # Works fine
-test_grid = set_switch_plan(test_grid, (0,0), (9,0), 'toggle')
+    brightness_value = 0
 
-print('\n', '#' * 40, '\n')
-pp(test_grid)
-print('\n', '#' * 40, '\n')
-print(compute_lights_on(test_grid))
+    for row in grid:
+        brightness_value += sum(row)
 
-# assert compute_lights_on(set_switch_plan(test_grid, (4,4), (5,5), 'turn_off')) == 86 # Works fine
-# test_grid = set_switch_plan(test_grid, (4,4), (5,5), 'turn_off')
+    return brightness_value
 
-# print('\n', '#' * 40, '\n')
-# pp(test_grid)
-# print('\n', '#' * 40, '\n')
+if __name__ == '__main__':
 
-# assert compute_lights_on(set_switch_plan(test_grid, (0,0), (999,0), 'turn_on')) == 1_000
+    # MB
+    with open('day06_input_mb.txt', 'r') as fh:
+        grid_1 = []
 
-# WRONG ANSWER: 535162 --> "TOO LOW"
+        for line in fh.readlines():
+            start, end = parse_coordinates(line)
+            action = parse_action(line)
+            grid_1 = set_switch_plan(init_grid, start, end, action)
 
-# if __name__ == '__main__':
-#     with open('day06_input_mb.txt', 'r') as fh:
-#     # with open('day06_input_test_smallgrid.txt', 'r') as fh:
-#         grid = []
-#         # print('Empty grid:')
-#         # print('\n', '#' * 40, '\n')
-#         # pp(grid)
-#         # print('\n', '#' * 40, '\n')
-#         # print('Initialized Grid:')
-#         # print('\n', '#' * 40, '\n')
-#         # pp(init_grid)
-#         # print('\n', '#' * 40, '\n')
+        print(f'MB - Number of lights switched on: {compute_lights_on(grid_1)}.')
 
-#         for line in fh.readlines():
-#             start, end = parse_coordinates(line)
-#             action = parse_action(line)
-#             # print(f'Start Point: {start}, \t End Point: {end}, \t Action: {action}')
-#             grid = set_switch_plan(init_grid, start, end, action)
-#             # print('\n', '#' * 40, '\n')
-#             # pp(grid)
-#             # print('\n', '#' * 40, '\n')
-#         print(f'Number of lights switched on: {compute_lights_on(grid)}.')
+    with open('day06_input_mb.txt', 'r') as fh:
+        grid_2 = []
+
+        for line in fh.readlines():
+            start, end = parse_coordinates(line)
+            action = parse_action(line)
+            grid_2 = set_brightness(init_grid, start, end, action)
+
+        print(f'MB - Brightness value: {compute_brightness_value(grid_2)}.')
+
+    # MP
+    with open('day06_input_mp.txt', 'r') as fh:
+        grid_1 = []
+
+        for line in fh.readlines():
+            start, end = parse_coordinates(line)
+            action = parse_action(line)
+            grid_1 = set_switch_plan(init_grid, start, end, action)
+
+        print(f'MP - Number of lights switched on: {compute_lights_on(grid_1)}.')
+
+    with open('day06_input_mp.txt', 'r') as fh:
+        grid_2 = []
+
+        for line in fh.readlines():
+            start, end = parse_coordinates(line)
+            action = parse_action(line)
+            grid_2 = set_brightness(init_grid, start, end, action)
+
+        print(f'MP - Brightness value: {compute_brightness_value(grid_2)}.')
