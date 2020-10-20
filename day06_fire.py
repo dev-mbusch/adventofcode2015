@@ -44,7 +44,7 @@ def set_switch_plan(start_grid, start_point, end_point, action):
 
         for j, column in enumerate(row[y1:y2+1]):
             if action == 'toggle':
-                end_grid[j + offset_x][i + offset_y] = int(not end_grid[j][i])
+                end_grid[j + offset_x][i + offset_y] = int(not end_grid[i][j])
             elif action == 'turn_on':
                 end_grid[j + offset_x][i + offset_y] = 1
             elif action == 'turn_off':
@@ -65,20 +65,25 @@ def compute_lights_on(grid):
 # Tests Part One 10x10 Grid
 test_grid = []
 
+print('\n', '#' * 40, '\n')
+pp(init_grid)
+print('\n', '#' * 40, '\n')
+
 assert compute_lights_on(set_switch_plan(init_grid, (0,0), (9,9), 'turn_on')) == 100 # Works fine
 test_grid = set_switch_plan(init_grid, (0,0), (9,9), 'turn_on')
 
 print('\n', '#' * 40, '\n')
 pp(test_grid)
 print('\n', '#' * 40, '\n')
+print(compute_lights_on(test_grid))
 
 assert compute_lights_on(set_switch_plan(test_grid, (0,0), (9,0), 'toggle')) == 90 # Works fine
 test_grid = set_switch_plan(test_grid, (0,0), (9,0), 'toggle')
-print(compute_lights_on(test_grid))
 
 print('\n', '#' * 40, '\n')
 pp(test_grid)
 print('\n', '#' * 40, '\n')
+print(compute_lights_on(test_grid))
 
 # assert compute_lights_on(set_switch_plan(test_grid, (4,4), (5,5), 'turn_off')) == 86 # Works fine
 # test_grid = set_switch_plan(test_grid, (4,4), (5,5), 'turn_off')
