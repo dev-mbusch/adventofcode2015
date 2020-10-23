@@ -2,8 +2,6 @@
 https://adventofcode.com/2015/day/6
 """
 
-# TODO: 1. BITWISE OPERATION --> Je nach INSTRUCTION das jeweilige Element setzen
-# TODO: 2. ZÄHLEN VON EINSEN IMPLEMENTIEREN
 
 import re
 from pprint import pprint as pp
@@ -112,6 +110,10 @@ if __name__ == '__main__':
         print(f'MB - Brightness value: {compute_brightness_value(grid_2)}.')
 
     # MP
+
+    # Grid Initilization FÜR MARTEN !!1!
+    init_grid = [[0 for _i in range(gridsize)] for _j in range(gridsize)]
+
     with open('day06_input_mp.txt', 'r') as fh:
         grid_1 = []
 
@@ -121,6 +123,9 @@ if __name__ == '__main__':
             grid_1 = set_switch_plan(init_grid, start, end, action)
 
         print(f'MP - Number of lights switched on: {compute_lights_on(grid_1)}.')
+
+    # Grid Initilization FÜR MARTEN !!1!
+    init_grid = [[0 for _i in range(gridsize)] for _j in range(gridsize)]
 
     with open('day06_input_mp.txt', 'r') as fh:
         grid_2 = []
