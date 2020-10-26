@@ -2,15 +2,15 @@
 https://adventofcode.com/2015/day/6
 """
 
-# TODO: 1. BITWISE OPERATION --> Je nach INSTRUCTION das jeweilige Element setzen
-# TODO: 2. ZÄHLEN VON EINSEN IMPLEMENTIEREN
 
 import re
 from pprint import pprint as pp
 
 # Grid Initilization
-gridsize = 1000
-init_grid = [[0 for _i in range(gridsize)] for _j in range(gridsize)]
+def grid_initialization(size: int, value: int):
+    gridsize = size
+    init_grid = [[value for _i in range(gridsize)] for _j in range(gridsize)]
+    return init_grid
 
 
 def parse_action(instructions: str) -> str:
@@ -92,42 +92,43 @@ if __name__ == '__main__':
 
     # MB
     with open('day06_input_mb.txt', 'r') as fh:
-        grid_1 = []
+        grid_1 = grid_initialization(1000, 0)
 
         for line in fh.readlines():
             start, end = parse_coordinates(line)
             action = parse_action(line)
-            grid_1 = set_switch_plan(init_grid, start, end, action)
+            grid_1 = set_switch_plan(grid_1, start, end, action)
 
         print(f'MB - Number of lights switched on: {compute_lights_on(grid_1)}.')
 
     with open('day06_input_mb.txt', 'r') as fh:
-        grid_2 = []
+        grid_2 = grid_initialization(1000, 0)
 
         for line in fh.readlines():
             start, end = parse_coordinates(line)
             action = parse_action(line)
-            grid_2 = set_brightness(init_grid, start, end, action)
+            grid_2 = set_brightness(grid_2, start, end, action)
 
         print(f'MB - Brightness value: {compute_brightness_value(grid_2)}.')
 
     # MP
+
     with open('day06_input_mp.txt', 'r') as fh:
-        grid_1 = []
+        grid_1 = grid_initialization(1000, 0)
 
         for line in fh.readlines():
             start, end = parse_coordinates(line)
             action = parse_action(line)
-            grid_1 = set_switch_plan(init_grid, start, end, action)
+            grid_1 = set_switch_plan(grid_1, start, end, action)
 
         print(f'MP - Number of lights switched on: {compute_lights_on(grid_1)}.')
 
     with open('day06_input_mp.txt', 'r') as fh:
-        grid_2 = []
+        grid_2 = grid_initialization(1000, 0)
 
         for line in fh.readlines():
             start, end = parse_coordinates(line)
             action = parse_action(line)
-            grid_2 = set_brightness(init_grid, start, end, action)
+            grid_2 = set_brightness(grid_2, start, end, action)
 
         print(f'MP - Brightness value: {compute_brightness_value(grid_2)}.')
