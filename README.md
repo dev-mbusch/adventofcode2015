@@ -14,3 +14,4 @@ Solutions are developed in pair programming mode.
 * Day 5: Solved 2020-10-13 (Only Part Two)
 * Day 6: WIP    2020-10-19 (Only Part One)
 * Day 6: Solved 2020-10-20
+* Day 7: Solved 2020-10-26 (Only pseudocode / working hypothesis)
